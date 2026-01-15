@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "EditCar", value = "/EditCar")
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"WRITE_CARS"}))
 public class EditCar extends HttpServlet {
     @Inject
     UsersBean usersBean;
