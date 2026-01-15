@@ -1,26 +1,22 @@
 package org.example.parkinglot.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "car")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue
     private Long id;
 
-    @Column(name = "parking_spot")
+    private String licensePlate;
     private String parkingSpot;
 
-    @Column(name = "license_plate")
-    private String licensePlate;
+    private CarPhoto photo;
 
-    @Column(name = "id_car")
-    private Long id_car;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     public User getOwner() {
@@ -31,37 +27,40 @@ public class Car {
         this.owner = owner;
     }
 
-    public String getParkingSpot() {
-        return parkingSpot;
-    }
-
-    public void setParkingSpot(String parkingSpot) {
-        this.parkingSpot = parkingSpot;
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    public Long getId_car() {
-        return id_car;
-    }
-
-    public void setId_car(Long id_car) {
-        this.id_car = id_car;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
+    @Size(min = 3, max = 100)
+    @Column(unique = true, nullable = false, length = 100)
+    public String getLicensePlate() {
+        return licensePlate;
+    }
 
+    public void setParkingSpot(String parkingSpot) {
+        this.parkingSpot = parkingSpot;
+    }
+
+    @Size(min = 3, max = 100)
+    @Column(unique = true, nullable = false, length = 100)
+    public String getParkingSpot() {
+        return parkingSpot;
+    }
+
+    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public CarPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(CarPhoto photo) {
+        this.photo = photo;
+    }
 }

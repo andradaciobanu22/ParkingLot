@@ -35,7 +35,7 @@
             </c:forEach>
         </div>
     </form>
-    <c:if test="${pageContext.request.isUserInRole('INVOICING')}">
+
         <c:if test="${not empty invoices}">
             <h2>Invoices</h2>
             <c:forEach var="username" items="${invoices}" varStatus="status">
@@ -43,5 +43,4 @@
                 <br>
             </c:forEach>
         </c:if>
-    </c:if>
 </t:pageTemplate>
